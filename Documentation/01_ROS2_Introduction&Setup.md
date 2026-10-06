@@ -513,3 +513,44 @@ Therefore:
 - Use a topic for continuous commands without a direct result.
 - Use a service for a simple request and final response.
 - Use an action for a movement that takes time and requires feedback, result reporting or cancellation.
+
+
+---
+
+**Apunts 06/10**
+
+Practice ROS with Turtlesim
+
+verify we have the final version of the github.
+pull and compile again (`colcon build`) to work with final version.
+
+Example: exists a package with the name of Turtlesim. we have different nodes and things to verify. main node is the turtlesim node => node that takes a turtle and puts it in a blue box (11 x 11 m), and puts in the middle a turtle with specific orientation and position. we have to run 
+`ros2 run turtlesim turtlesim_node` (terminal with ROS tutorial)
+specify first the package (portion of the program, folders where all the files / nodes are placed)
+
+position and orientation, turtle looking at the front, X axis (is the 0 angle)
+
+there are some nodes / topics / services, actions etc.
+
+node = python file that executes sth. in this case, it's subscribing / listening to the topic turtle1 command velocity (command for velocity of turtle), and if a message appears in this topic, has a form of twist vector (geometrical messages defined in ROS), if no message here, turtle is stopped and waiting for a message.
+at the same time, it's publishing some information (its pose in a specific topic called turtle1 pose; and also a message about the color bc it's able to read the color in the ground (now blue), but if there's a wall with yellow line, can detect it (and we can order it to stop))
+
+now open a new terminal
+several messages to 
+messages twist published in this (linear and angular velocity), we can publish how the turtle we want to move / how it's moving with a linear vector (specify velocity in X / Y / Z direction) (but from the first linear vel vector, we can only specify the first component, X direction, turtle cannot move in any other direction) (and in the second vector, we can only specify the last angular value, just can rotate across Z axis)
+
+how to control the turtle? publish a message twist in this cmd velocity topic => ros2 topic pub -r /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {2.0, 
+-r means recursive
+1 => 1 Hz (every second I publish this)
+specify first the topic and later the type of message /msg/Twist, and then the syntax of the message (2 vectors, with their components)
+
+
+Also I can read sth the turtle is publishing (ex: its pose): ros2 topic echo ??
+OPEN A NEW TERMINAL WHEN I LAUNCH A NODE, THE TERMINAL IS BUSY (open a terminal every time you need to execute sth and the terminal is busy)
+publishes its position every second
+close it?? => structure of POSE message 
+
+to see the structure of nodes, topics, etc. => rqt_graph
+
+rqt_plot => have a graph of the X and Y position
+see in a grape the values / contents of every message
