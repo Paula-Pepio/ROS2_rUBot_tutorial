@@ -202,3 +202,73 @@ Now you can execute the launch file:
 ```shell
 ros2 launch ros2_tutorial hello_pub_sub.xml
 ```
+
+---
+
+**Apunts 06/10**
+
+how can we construct our own robot / node / publisher / subscriber / package... etc?
+
+several packages, where are the nodes, how they are constructed...
+
+workspace we are working (ubuntu 22)
+
+project => contains diff parts of the code, contains packages.
+
+ex: project ROS2 tutorial project, and inside this project there's the src folder => folders with diff functionalities of the project (ros2_move, or pose_tf2 => move brick...)
+these are packages; and they contain all needed nodes and code
+
+to create a package, first choose which language we will use (C++ or Python) bc they have different structures.
+- `.xml` (dependencies)
+- setup.py (how I compile my code, if there are other subfolders...; specify which nodes I have created inside this nsq, publisher and )
+- where the nodes are placed (folder with same name as the package = ros2_tutorial). inside there are 2 nodes we have created
+
+Create a new package; instruction
+specify the type of the package we will create (python); license to share bc is a public repository; package name and the dependencies (if package depends on other packages / libraries... => rclpy (ROS nsq library) and perhaps others)
+
+i have to create my nodes
+
+once we have created a new package, we have to compile again (go to main repository to compile it there).
+once compiled, in the .bashrc file we have written this (when you open a new terminal always go to the ROS terminal)
+
+once we have created this package, we have to create nodes (node of cmd velocity, to read sth from ??...)
+subprograms in our application to do one thing in the big program
+
+ex of application of 2 nodes, and each one is a python file (talker --> publishes sth / stream message in a specific (chatter) topic; and listener --> subscribes to the topic to read the message and publish it in the screen) (publisher and subscriber).
+typical schematic to follow!!
+know the structure of the programs we have to write for the publisher and the subscriber
+
+main: initialize the node; then does a class of minimal publishers, then does an object of this class
+a class contains properties and functionalities (properties are characteristics of the object of this class, ex: color...)
+for publisher object, one property of it is that it's able to create the publisher (it's the function of this class), of messages of the type of String (letters), and the topic we call chatter (name of topic we want to publish), and 10 is the buffer (publish several messages in a time, and keep some messages in the buffer)
+i have to publish with a timer with a period (ex: every half a second; it's synchronized). when this period elapses, i run this function, able to publish
+functionalities = all the functions it's able to do. 
+
+timer_callback:
+take all string messages
+has only 1 field (data) to fill. i fill this data with Hello World
+and then I publish (publisher_.publish)
+function to print what i'm publishing in the terminal
+and increment this variable
+
+this is in a loop (rclpy.spin)
+
+publisher publishes, and the other listens and when it reaches on, publishes it ???
+
+MinimalSubscriber, properties (subscription, 
+topic he is able to subscribe
+read messages in type of string
+then calls a _callback function (function from a subscriber)
+when arrives a message in topic, executes this function, which is the only functionality in this node; and only prints what it has read
+spin to execute this in a loop
+
+standard format frame of this ROS execution
+
+compile all the nodes even if they are created in python (node_exec)
+after colcon build, we can call with this name to obtain the nodes 
+ros2 run (name of package) (name of node) => to execute a node
+1 terminal busy for the publisher node; open another terminal to execute the listener (the other one is busy publishing), reads the message that the publisher finished publishing
+
+ONE TERMINAL FOR EACH NODE WE HAVE in the project (running at the same time)!
+
+how to compact several nodes in the same file in the same terminal
